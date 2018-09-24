@@ -12,13 +12,13 @@
         <!--Entries-->
         <scene sceneID="8Gd-VE-shi">
             <objects>
-                <tableViewController id="859-aK-Kzd" sceneMemberID="viewController">
+                <tableViewController id="859-aK-Kzd" customClass="EntriesTVC" customModule="JournalCK" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="0ej-d5-UnI">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="QNl-1R-nBy" style="IBUITableViewCellStyleDefault" id="jHe-kT-geT">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="entryCell" textLabel="QNl-1R-nBy" style="IBUITableViewCellStyleDefault" id="jHe-kT-geT">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jHe-kT-geT" id="Qgj-Zy-BuY">
@@ -34,6 +34,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="WCp-X1-ZFA" kind="show" identifier="viewEntry" id="YwG-lD-8ya"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -44,6 +47,7 @@
                     <navigationItem key="navigationItem" title="Entries" id="HoY-D6-f10">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="jua-jt-FOm">
                             <connections>
+                                <action selector="addNewEntryBP:" destination="859-aK-Kzd" id="gb0-ax-qGf"/>
                                 <segue destination="WCp-X1-ZFA" kind="show" id="AHR-Ru-gB3"/>
                             </connections>
                         </barButtonItem>
@@ -56,7 +60,7 @@
         <!--Entry-->
         <scene sceneID="TPv-8i-tcQ">
             <objects>
-                <viewController id="WCp-X1-ZFA" sceneMemberID="viewController">
+                <viewController id="WCp-X1-ZFA" customClass="DetailVC" customModule="JournalCK" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NqA-6j-s2c">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -92,8 +96,16 @@
                         <viewLayoutGuide key="safeArea" id="bxM-yp-Ju0"/>
                     </view>
                     <navigationItem key="navigationItem" title="Entry" id="NgR-C4-ycq">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="wEJ-GS-dDV"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="wEJ-GS-dDV">
+                            <connections>
+                                <action selector="saveBP:" destination="WCp-X1-ZFA" id="OfU-do-Pb1"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="bodyTextView" destination="muf-OE-eKi" id="adq-Cg-PLi"/>
+                        <outlet property="titleTF" destination="v6h-y5-DSN" id="UHm-QM-652"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OwO-JU-Be1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -116,4 +128,7 @@
             <point key="canvasLocation" x="-199" y="114"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="AHR-Ru-gB3"/>
+    </inferredMetricsTieBreakers>
 </document>

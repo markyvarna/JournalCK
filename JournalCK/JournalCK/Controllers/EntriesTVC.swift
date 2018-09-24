@@ -10,32 +10,68 @@ import UIKit
 
 class EntriesTVC: UITableViewController {
 
-    //MARK: - Outlets
+    
+    //property observer
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        updateView()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateView()
+        self.tableView.reloadData()
     }
 
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 0
+        return EntryController.shared.entries.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "entryCell", for: indexPath)
+        let entry = EntryController.shared.entries[indexPath.row]
+    
+        cell.textLabel?.text = entry.title
+        
         return cell
     }
     
-
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        
+        
+    }
+    
+    func updateView() {
+        
+        EntryController.shared.fetchEntries { (success) in
+            DispatchQueue.main.async {
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                self.tableView.reloadData()
+            }
+        }
+        
+        
+    }
+    
+    //MARK: - Actions
+    
+    @IBAction func addNewEntryBP(_ sender: UIBarButtonItem) {
+        
+        
+        
+    }
+    
 
     /*
     // Override to support editing the table view.
@@ -48,15 +84,21 @@ class EntriesTVC: UITableViewController {
         }    
     }
     */
-
-    /*
+    
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        
+        if segue.identifier == "viewEntry" {
+            let destinationvc = segue.destination as? DetailVC
+            guard let indexPath = tableView.indexPathForSelectedRow else {return}
+            destinationvc?.entry = EntryController.shared.entries[indexPath.row]
+            
+        }
+        
     }
-    */
+    
 
 }
